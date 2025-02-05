@@ -1,3 +1,19 @@
+body {
+    background-color: rgb(1, 1, 61);
+}
+
 h1 {
-    color: darkred;
+    color: white;
+}
+
+h2 {
+    color: rgba(192, 192, 192, 0.855);
+}
+
+h3 {
+    color: rgb(213, 208, 208);
+}
+
+img {
+    max-width: 50%;
 }
