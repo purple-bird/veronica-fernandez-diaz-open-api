@@ -1,0 +1,99 @@
+/*This applies for mobile phones*/
+
+body {
+  background-color: rgb(164, 20, 20);
+  margin: 1em;
+  color: white;
+}
+
+h1 {
+  font-family: "Bangers", serif;
+  font-size: 4rem;
+  text-align: center;
+}
+
+h2 {
+  font-family: "Bangers", serif;
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-family: "Fuzzy Bubbles", serif;
+  font-size: 1.1rem;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 60%;
+}
+
+button {
+  font-family: "Bangers", serif;
+  font-size: 1.2rem;
+  margin: 0em 2em;
+  padding: 0.3em 0.5em;
+}
+
+a {
+  font-family: "Bangers", serif;
+  color: white;
+}
+
+@media all and (min-width: 600px) {
+  /*This applies for tablets*/
+
+  body {
+    margin: 2em;
+  }
+
+  h1 {
+    font-size: 4.5rem;
+  }
+
+  h2 {
+    font-size: 2.7rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  img {
+    max-width: 70%;
+  }
+
+  button {
+    font-size: 1.5rem;
+    margin: 0.5em 1.5em;
+    padding: 0.3em 0.5em;
+  }
+}
+
+@media all and (min-width: 768px) {
+  /* This applies for desktop: */
+  body {
+    margin: 4em;
+  }
+
+  h1 {
+    font-size: 5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  img {
+    max-width: 50%;
+  }
+
+  button {
+    font-size: 1.5rem;
+    margin: 1em;
+    padding: 0.5em 1em;
+  }
+}

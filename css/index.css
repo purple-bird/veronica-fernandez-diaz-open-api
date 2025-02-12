@@ -1,19 +1,87 @@
+/*This applies for mobile phones*/
+
 body {
-    background-color: rgb(1, 1, 61);
+  color: rgba(255, 255, 255, 0.855);
+  font-family: "Bangers", serif;
+  font-size: 1.5rem;
 }
 
 h1 {
-    color: white;
+  color: rgb(218, 237, 11);
+  font-family: "Bangers", serif;
+  font-size: 3.5rem;
+  text-align: center;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
 }
 
-h2 {
-    color: rgba(192, 192, 192, 0.855);
+#all-heroes {
+  display: grid;
+  grid-auto-flow: row;
 }
 
-h3 {
-    color: rgb(213, 208, 208);
+li {
+  background: rgb(218, 237, 11);
+  color: black;
+  padding: 0.4em;
+  list-style-type: none;
+  border: solid black;
+  border-radius: 8px;
+  margin: 0.5em 0.5em;
 }
 
-img {
-    max-width: 50%;
+html {
+  background-image: url("https://media.wired.com/photos/5955ceabcbd9b77a41915cf6/master/w_1920,c_limit/marvel-characters.jpg");
+  background-size: contain;
+  background-position-x: center;
+}
+
+a {
+  color: white;
+}
+
+button {
+  font-family: "Bangers", serif;
+  font-size: 1.5rem;
+  margin: 1em 0em;
+  padding: 0.3em;
+}
+
+@media all and (min-width: 600px) {
+  /*This applies for tablets*/
+
+  h1 {
+    font-size: 4.5rem;
+  }
+
+  #all-heroes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  li {
+    padding: 0.5em;
+  }
+}
+
+@media all and (min-width: 768px) {
+  /*This applies for desktop*/
+  h1 {
+    font-size: 6rem;
+  }
+
+  #all-heroes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  #previous-button {
+    margin: 1em 0em 1em 1em;
+    font-size: 2rem;
+  }
+
+  #next-button {
+    margin: 1em 0.5em 1em 1em;
+    font-size: 2rem;
+  }
 }

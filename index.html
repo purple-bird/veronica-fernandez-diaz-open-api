@@ -3,13 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Veronica's Open API Project</title>
     <link href="css/index.css" rel="stylesheet" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bangers&display=swap");
+    </style>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Marvel:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+    </style>
+    <title>Veronica's Open API Project</title>
   </head>
   <body>
-    <h1>Veronica's Open API Project</h1>
-    <button id ="fetch-superhero">See superhero</button>
-    <div id="superhero-container"></div>
+    <h1>The Marvel Universe Characters</h1>
+    <section id="all-heroes">
+      <ul></ul>
+    </section>
+    <button id="previous-button">Previous</button>
+    <button id="next-button">Next</button><br />
+    <a href="http://marvel.com">Data provided by Marvel. © 2014 Marvel</a>
     <script src="js/index.js"></script>
   </body>
 </html>
