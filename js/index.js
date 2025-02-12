@@ -1,75 +1,126 @@
-const superheroContainer = document.getElementById("superhero-container");
+const baseUrl =
+  "http://gateway.marvel.com/v1/public/characters?ts=1&apikey=9509d166898bd3ba72a66cb5ad658b98&hash=148d632631f5d12900e7bf7e61af9275&limit=30";
+const heroContainer = document.getElementById("all-heroes");
+const nextButton = document.getElementById("next-button");
+const previousButton = document.getElementById("previous-button");
 
-const fetchSuperhero = document.getElementById("fetch-superhero");
+// Create variables for pagination - show 30 at a time
+let page = 0;
+let perPage = 30;
 
-// The fetch happens after clicking the button
-fetchSuperhero.addEventListener("click", () => {
-  // Make sure it is empty before generating again
-  superheroContainer.innerHTML = "";
+// Function to fetch all data
 
-  // Get random number
-  function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+async function fetchAllRecords() {
+  try {
+    const response = await fetch(baseUrl);
 
-  let randomObject = getRandomNumber(1, 20);
-  console.log(randomObject);
+    if (!response.ok) {
+      throw new Error("Request Failed");
+    }
 
-  // Create fetch for my Github:
-  fetch(
-    "http://gateway.marvel.com/v1/public/comics?ts=1&apikey=9509d166898bd3ba72a66cb5ad658b98&hash=148d632631f5d12900e7bf7e61af9275"
-  )
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Request failed");
+    let record = await response.json();
+    console.log("Record:", record);
+
+    const recordLength = record.data.total;
+
+    console.log("Data feched successfully:", recordLength);
+
+    // For Pagination
+    heroContainer.innerHTML = "";
+    let min = page * perPage;
+    let max = min + perPage;
+
+    // Create URLs pull data from
+
+    const pageUrl = baseUrl + "&offset=";
+    const urls = [];
+
+    for (let i = min; i < Math.min(recordLength, max); i += 30) {
+      urls.push(pageUrl + i);
+
+      if (i > perPage) {
+        break;
       }
-      return response.json();
-    })
+    }
 
-    // Handle JSON data:
-    .then((repositories) => {
-      // Look at superhero object
-      const superhero = repositories.data.results[randomObject];
+    getAllPages(urls);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
 
-      // Look at superhero thumbnail
-      const superheroThumbnail = superhero.thumbnail;
-      console.log(superheroThumbnail);
+fetchAllRecords();
 
-      // Create valid URL for image
-      const superheroImageURL =
-        `${superheroThumbnail.path}` + `.` + `${superheroThumbnail.extension}`;
-      console.log(superheroImageURL);
+// Function to fetch the URLs of each character
 
-      // Create image element
-      const superheroImage = document.createElement("img");
-      superheroImage.src = superheroImageURL;
+async function getAllPages(urls) {
+  const promiseList = urls.map((url) =>
+    fetch(url).then((r) =>
+      r.json().catch((err) => console.log("There was an errror", err))
+    )
+  );
 
-      // Get title
-      const title = superhero.title;
-
-      // Create header 2
-      const titleElement = document.createElement("h2");
-
-      // Put title text in header
-      titleElement.innerText = title;
-
-      // Get format
-      const format = superhero.format;
-
-      // Create header 3
-      const formatElement = document.createElement("h3");
-
-      // Put format text in header
-      formatElement.innerText = format;
-
-      // Order inside container
-      superheroContainer.appendChild(titleElement);
-      superheroContainer.appendChild(formatElement);
-      superheroContainer.appendChild(superheroImage);
-    })
-
-    // Handle errors:
-    .catch((error) => {
-      console.error("An error occured:", error);
+  const finalResult = await Promise.all(promiseList).then((allResults) => {
+    let finalList = [];
+    allResults.forEach((res) => {
+      finalList = finalList.concat(res.data.results);
     });
+    console.log("finalList: ", finalList);
+
+    // For each character get the name
+
+    for (let person of finalList) {
+      // To create a div element
+      let personElt = document.createElement("div");
+
+      // To use the ID number of a character
+      let aPerson = person.id;
+
+      // To create the URL for each character
+
+      let personURL =
+        `https://gateway.marvel.com/v1/public/characters/` +
+        `${aPerson}` +
+        `?ts=1&apikey=9509d166898bd3ba72a66cb5ad658b98&hash=148d632631f5d12900e7bf7e61af9275`;
+
+      // Set class attribute
+      personElt.className = "person";
+
+      // Create li element
+      personHeader = document.createElement("li");
+
+      // Set the inner text to show the character's name
+
+      personHeader.innerText = person.name;
+
+      // Place the created elements
+      personElt.appendChild(personHeader);
+      heroContainer.appendChild(personElt);
+
+      // Create event listener so clicking on a character goes to that character's corresponding info page
+
+      personElt.addEventListener("click", () => {
+        const personUrlFile = "./person.html";
+        const params = new URLSearchParams();
+        params.append("url", personURL);
+        const paramsURL = personUrlFile + "?" + params.toString();
+        console.log("paramsURL: ".paramsURL);
+        window.location.href = paramsURL;
+      });
+    }
+    return finalList;
+  });
+}
+
+// To be able to click the next button and see the next 30 characters
+nextButton.addEventListener("click", function () {
+  page++;
+  fetchAllRecords();
+});
+
+// To be able to click the previous button and see the previous 30 characters
+
+previousButton.addEventListener("click", function () {
+  page--;
+  fetchAllRecords();
 });
